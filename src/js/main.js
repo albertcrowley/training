@@ -1,42 +1,35 @@
 var api_url = "https://w04l20nwn9.execute-api.us-east-1.amazonaws.com/test/";
 
 
-console.log (WildRydes.authToken);
-WildRydes.authToken.then(function(token) {
-  jQuery("#uspan").text(token);
 
-  var o = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function(){
-    var res = o.apply(this, arguments);
-    var err = new Error();
-    this.setRequestHeader('authorization', token);
-    return res;
-  }
-
-
-  var url = api_url + "user";
-  jQuery.ajax({
-    type: "GET",
-    headers:{
-      "authorization": token
-    },
-    url: url,
-    done: function (data) {
-      console.log(data);
-    }
-  });
-
-});
+TrainTracker.init = function() {
+  //load the user list
+  showUserList();
+}
 
 function search_by_email() {
-  var email = jQuery("#email").val();
-  var url = api_url + "users/" + email;
-  jQuery.ajax(url).done(function (data){
 
-    if (typeof(data) == "object" && data.hasOwnProperty('classes') ) {
-      show_classes(data);
-    }
-  });
+  var users_promise = TrainTracker.getUsers();
+
+  users_promise.then(function(done) {
+    console.log("eventually got "); console.log( done);
+  }).catch(function(err) { console.log("got an error - " + err.statusText);});
+
+
+}
+
+function showUserList() {
+
+  var users_promise = TrainTracker.getUsers();
+
+  users_promise.then(function(users) {
+    console.log("eventually got "); console.log( users);
+
+    jQuery("div#user-list").html("loaded " + users);
+
+  }).catch(function(err) { console.log("got an error - " + err.statusText);});
+
+
 }
 
 
@@ -54,3 +47,6 @@ function show_classes(data) {
   var html = template(data);
   jQuery("#results").html(html);
 }
+
+
+TrainTracker.init();

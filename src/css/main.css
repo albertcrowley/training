@@ -287,3 +287,7 @@ textarea {
         page-break-after: avoid;
     }
 }
+
+.outer-frame {
+  margin:10px;
+}
