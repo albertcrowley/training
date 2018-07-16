@@ -9904,3 +9904,10 @@ span.customSelect.changed {
 #sendmessage.show, #errormessage.show, .show {
 	display:block;
 }
+
+table.b64table td {
+  white-space: nowrap;
+}
+table.b64table th {
+  font-size: 1.5em;
+}

@@ -32,7 +32,7 @@ var TrainTracker = window.TrainTracker || {};
       });
     });
 
-    
+
 
     return api_promise;
   }
